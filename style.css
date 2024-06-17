@@ -17,15 +17,17 @@
 	justify-content: center;
 	align-items: center;
 	position: fixed;
-	z-index:99;
+
+
+
 	
-	
+
   }
 
 .loadball{
-	height:250px;
-	width:250px;
-	animation: rotation 4s infinite linear;
+	height:300px;
+	width:300px;
+	animation: rotation 2s infinite linear;
   }
 
 .loadingtext {
@@ -37,7 +39,7 @@
 	border: solid 4px rgb(120, 115, 115);
 	
   }
-:root { 
+ :root {   
 	--identity-primary: #0a49dc;
 	--grayscale-dark: #212121;
 	--grayscale-medium: #666666;

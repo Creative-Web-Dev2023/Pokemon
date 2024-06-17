@@ -5,13 +5,17 @@ const numberFilter = document.getElementById('number');
 const nameFilter =document.getElementById('name');
 const notFoundMessage = document.getElementById('not-found-message');
 
-let allPokemons = [];
+let allPokemonsWithId = [];
 
 async function fetchPokemons() {
     const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=151');
-    const data = await response.json();
-    allPokemons = data.results;
-    renderPokemons(allPokemons);
+const data = await response.json();
+const allPokemons = data.results;
+allPokemons.forEach((pokemon, index) => {
+    const id = index + 1;
+    allPokemonsWithId.push({ ...pokemon, id });
+});
+renderPokemons(allPokemonsWithId);
 
     loadScreen();
     }
@@ -33,13 +37,16 @@ function renderPokemons(pokemons) {
                 <p class="body3-fonts">${pokemon.name}</p>
             </div>
         `;
-        listItem.addEventListener('click', () => showPokemon(pokemonId)); // Hinzugefügt, um den Dialog beim Klicken zu öffnen
+        
         listWrapper.appendChild(listItem); // Add the Pokemon to the list   
     });
 }
 function filterPokemons() {   // Filter the Pokémon by the search input
-    const searchValue = searchInput.value.toLowerCase();
-    const filteredPokemons = allPokemons.filter(pokemon => pokemon.name.startsWith(searchValue));
+    const searchValue = searchInput.value.toLowerCase(); //
+    const filteredPokemons = allPokemonsWithId.filter(pokemon => 
+        pokemon.name.startsWith(searchValue) ||
+        pokemon.id.toString().startsWith(searchValue),
+    );
   
     renderPokemons(filteredPokemons);
     if (filteredPokemons.length === 0) {  // If filteredPokemons is empty, show the not found message
@@ -86,4 +93,12 @@ function closeDialog(dialog) {
 function loadScreen(){
     const loadScreenElement = document.getElementById('loadscreen');
     loadScreenElement.style.display = 'flex'; // Zeigt den Ladebildschirm an
+}
+function sortNumber(){
+ allPokemonsWithId.sort((x,y) =>{
+    const xId =parseInt(x.url.split("/")[6]); // Split the url and get the id
+    const yId =parseInt(y.url.split("/")[6]); // parsing from x, now is Y
+    return xId - yId; // Compare the ids numerically
+ });
+ renderPokemons(allPokemonsWithId);
 }
