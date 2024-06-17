@@ -6,16 +6,18 @@
     <title>Pokemon</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" type="favicon" href="./img/">
-    <script src="./script.js" defer></script>
-	
-	<link rel="shortcut icon" href="./img/game.png" type="icon>
+   
+	  <link rel="shortcut icon" href="./img/game.png" type="icon">
   </head>
+  <div id="loadscreen">
+    <img class="loadball" src="./img/pokeball.png">
+    <p class="loadingtext">Loading Pokemons</p>
   <body >
     <main class="main">
       <header class="header home">
         <div class="container">
           <div class="logo-wrapper">
-            <img src="./img/game.png" class="pokeball" />
+            <img src="./img/game.png" class="pokeball"/>
            <img src="./img/pokemonlogo.png" alt="" class="pokemon-logo">
           </div>
           <div class="search-wrapper">
@@ -45,6 +47,7 @@
           </div>
         </div>
       </header>
+      
       <section class="pokemon-list">
         <div class="container">
           <div class="list-wrapper" id="list-wrapper"></div>
@@ -52,6 +55,9 @@
         <div id="not-found-message">Pokemon not found</div>
       </section>
     </main>
-	<script src="./search.js"></script>
+    <div id="dialog" class="dialog d-none"></div>
+ 
+	  <script src="./script.js" defer></script>
+    <script src="./search.js"></script>
   </body>
 </html>

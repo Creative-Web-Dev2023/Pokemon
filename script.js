@@ -12,6 +12,8 @@ async function fetchPokemons() {
     const data = await response.json();
     allPokemons = data.results;
     renderPokemons(allPokemons);
+
+    loadScreen();
     }
 
 function renderPokemons(pokemons) {
@@ -28,15 +30,17 @@ function renderPokemons(pokemons) {
                 <img src="https://raw.githubusercontent.com/pokeapi/sprites/master/sprites/pokemon/other/dream-world/${pokemonId}.svg" alt="${pokemon.name}" />
             </div>
             <div class="name-wrap">
-                <p class="body3-fonts">#${pokemon.name}</p>
+                <p class="body3-fonts">${pokemon.name}</p>
             </div>
         `;
+        listItem.addEventListener('click', () => showPokemon(pokemonId)); // Hinzugefügt, um den Dialog beim Klicken zu öffnen
         listWrapper.appendChild(listItem); // Add the Pokemon to the list   
     });
 }
-function filterPokemons() {
+function filterPokemons() {   // Filter the Pokémon by the search input
     const searchValue = searchInput.value.toLowerCase();
     const filteredPokemons = allPokemons.filter(pokemon => pokemon.name.startsWith(searchValue));
+  
     renderPokemons(filteredPokemons);
     if (filteredPokemons.length === 0) {  // If filteredPokemons is empty, show the not found message
         notFoundMessage.style.display = 'block';   // 
@@ -47,15 +51,39 @@ function filterPokemons() {
 
 searchInput.addEventListener('input', filterPokemons); // Add the event listener to the input element
 
+
 fetchPokemons();
 
-
-function sortNumber() {
-    allPokemons.sort((x, y) => {
-        const xId =parseInt(x.url.split('/')[6]); // Split the url and get the id
-        const yId = parseInt(x.url.split('/')[6]);
-        return xId - yId; // Compare the ids numerically
-    });
+async function showPokemon(i) {
+    const dialog = document.getElementById('dialog');
+    let pokemon = await fetchPokemonById(i); 
+    toggleDialog(dialog);
+    dialog.innerHTML = dialogContent(pokemon, dialog);
+    console.log(pokemon);
 }
 
-   
+async function fetchPokemonById(id) {
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
+    const pokemon = await response.json();
+    return pokemon;
+}
+
+function dialogContent(pokemon, dialog) {
+    return /*html*/`
+        <div class="closeBtnDialog" id="closeBtnDialog" onclick="closeDialog(dialog)">X</div>
+        <h1>${pokemon.name}</h1>
+    `;
+}
+
+function toggleDialog(dialog) {
+    dialog.classList.toggle('d-none');
+}
+
+function closeDialog(dialog) {
+    toggleDialog(dialog);
+}
+
+function loadScreen(){
+    const loadScreenElement = document.getElementById('loadscreen');
+    loadScreenElement.style.display = 'flex'; // Zeigt den Ladebildschirm an
+}
