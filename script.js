@@ -7,18 +7,18 @@ const notFoundMessage = document.getElementById('not-found-message');
 
 let allPokemonsWithId = [];
 
+
 async function fetchPokemons() {
     const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=151');
-const data = await response.json();
-const allPokemons = data.results;
-allPokemons.forEach((pokemon, index) => {
-    const id = index + 1;
-    allPokemonsWithId.push({ ...pokemon, id });
-});
-renderPokemons(allPokemonsWithId);
+    const data = await response.json();
+    const allPokemons = data.results;
+    allPokemons.forEach((pokemon, index) => {
+        const id = index + 1;
+        allPokemonsWithId.push({ ...pokemon, id });
+    });
+    renderPokemons(allPokemonsWithId);
+}
 
-    loadScreen();
-    }
 
 function renderPokemons(pokemons) {
     listWrapper.innerHTML = '';
@@ -41,6 +41,8 @@ function renderPokemons(pokemons) {
         listWrapper.appendChild(listItem); // Add the Pokemon to the list   
     });
 }
+
+
 function filterPokemons() {   // Filter the Pokémon by the search input
     const searchValue = searchInput.value.toLowerCase(); //
     const filteredPokemons = allPokemonsWithId.filter(pokemon => 
@@ -57,9 +59,8 @@ function filterPokemons() {   // Filter the Pokémon by the search input
 }
 
 searchInput.addEventListener('input', filterPokemons); // Add the event listener to the input element
-
-
 fetchPokemons();
+
 
 async function showPokemon(i) {
     const dialog = document.getElementById('dialog');
@@ -69,11 +70,13 @@ async function showPokemon(i) {
     console.log(pokemon);
 }
 
+
 async function fetchPokemonById(id) {
     const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
     const pokemon = await response.json();
     return pokemon;
 }
+
 
 function dialogContent(pokemon, dialog) {
     return /*html*/`
@@ -82,18 +85,17 @@ function dialogContent(pokemon, dialog) {
     `;
 }
 
+
 function toggleDialog(dialog) {
     dialog.classList.toggle('d-none');
 }
+
 
 function closeDialog(dialog) {
     toggleDialog(dialog);
 }
 
-function loadScreen(){
-    const loadScreenElement = document.getElementById('loadscreen');
-    loadScreenElement.style.display = 'flex'; // Zeigt den Ladebildschirm an
-}
+
 function sortNumber(){
  allPokemonsWithId.sort((x,y) =>{
     const xId =parseInt(x.url.split("/")[6]); // Split the url and get the id
@@ -101,4 +103,26 @@ function sortNumber(){
     return xId - yId; // Compare the ids numerically
  });
  renderPokemons(allPokemonsWithId);
+}
+
+
+async function loadScreen(){
+    const loadScreenElement = document.getElementById('loadscreen');
+    await fetchPokemons(); // Lädt die Pokémon-Daten asynchron
+    if (loadScreenElement) {
+        loadScreenElement.style.display = 'flex'; // Zeigt den Ladebildschirm an
+    }
+}
+
+
+function loadingScreen(){
+    const loadingDiv = document.getElementById('loadscreen-div');
+    loadingDiv.classList.add('d-none');
+
+    setTimeout(function() {
+        loadingDiv.classList.remove('hideloading');
+        loadingDiv.classList.add('d-none');
+        pokemons.splice(0, 1);
+    }, 500);
+
 }

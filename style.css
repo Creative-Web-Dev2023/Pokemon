@@ -17,11 +17,7 @@
 	justify-content: center;
 	align-items: center;
 	position: fixed;
-
-
-
-	
-
+	background-color: rgba(0, 0, 0, 0.8);
   }
 
 .loadball{
@@ -30,15 +26,7 @@
 	animation: rotation 2s infinite linear;
   }
 
-.loadingtext {
-	font-size: 20px;
-	font-weight:300;
-	background-color: white;
-	padding: 8px;
-	border-radius: 16px;
-	border: solid 4px rgb(120, 115, 115);
-	
-  }
+
  :root {   
 	--identity-primary: #0a49dc;
 	--grayscale-dark: #212121;
@@ -125,6 +113,11 @@
 	height: 50px;
 	width: auto;
   }
+  .hideloading{
+	animation: hideloading ease-in-out 0.5s;
+	animation-fill-mode: forwards; 
+  }
+
   .main {
 	margin: 0;
 	padding: 0;
@@ -439,4 +432,9 @@
 	to {
 	  transform: rotate(360deg);
 	}
+  }
+
+  @keyframes hideloading {
+	0% { top: 0; }
+	100% { top: -100vh; }
   }
