@@ -14,7 +14,7 @@ body {
 	width: 100vw;
 	box-sizing: border-box;
 	font-family: 'Roboto', sans-serif;
-	background-color: #48559a;
+	background-color: #858b9b;
 	
   }
 .hideloading{
@@ -36,7 +36,6 @@ body {
 	width:300px;
 	animation: rotation 2s infinite linear;
   }
-
 
  :root {   
 	--identity-primary: #0a49dc;

@@ -5,16 +5,16 @@ const numberFilter = document.getElementById('number');
 const nameFilter = document.getElementById('name');
 const notFoundMessage = document.getElementById('not-found-message');
 const loadingDiv = document.getElementById('loadscreen-div'); // Loading Screen is always here
-const dialog = document.getElementById('dialog');
 
 let allPokemonsWithId = [];
 
 document.addEventListener("DOMContentLoaded", async () => {
+    loadingDiv.classList.toggle('d-none'); // Immediately show the loading screen
     await fetchPokemons();
     renderPokemons(allPokemonsWithId);
     setTimeout(() => {
         loadingDiv.classList.toggle('d-none');
-    }, 2000);
+    }, 3000); 
 })
 
 async function fetchPokemons() {
@@ -44,7 +44,7 @@ function renderPokemons(pokemons) {
                 <p class="body3-fonts">${pokemon.name}</p>
             </div>
         `;
-        listItem.addEventListener('click', () => showPokemon(pokemonId)); // Add event listener
+        listItem.addEventListener('click', () => window.location.href = `details.html?pokemonId=${pokemonId}`); // Redirect to details page
         listWrapper.appendChild(listItem); // Add the Pokemon to the list   
     });
 }
@@ -80,34 +80,8 @@ function sortNumber(){
     renderPokemons(allPokemonsWithId);
 }
 
-async function showPokemon(i) {
-    let pokemon = await fetchPokemonById(i); 
-    dialog.innerHTML = dialogContent(pokemon);
-    toggleDialog(dialog);
-    console.log(pokemon);
-}
-
 async function fetchPokemonById(id) {
     const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
     const pokemon = await response.json();
     return pokemon;
-}
-
-function dialogContent(pokemon) {
-    let types = pokemon.types.map(typeInfo => typeInfo.type.name).join(", ");
-    return /*html*/`
-      <div class="card-details">
-        <div class="closeBtnDialog" id="closeBtnDialog" onclick="toggleDialog(dialog)">X</div>
-        <div class="number-wrap-infos">
-            <p>#${pokemon.id} ${pokemon.name}</p>
-            <img class="img-wrap-info" src="https://raw.githubusercontent.com/pokeapi/sprites/master/sprites/pokemon/other/dream-world/${pokemon.id}.svg" alt="${pokemon.name}" />
-            <p><small  class="">Height: </small>${pokemon.height} 
-        |      <small class="">Weight: </small>${pokemon.weight} 
-        |      <small>Type: </small>${types}</p>
-        </div>
-    </div> 
-    `;
-}
-function toggleDialog(dialog) {
-    dialog.classList.toggle('d-none');
 }
