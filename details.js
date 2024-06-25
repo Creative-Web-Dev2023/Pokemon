@@ -1,11 +1,11 @@
 let pokemonId;
 
 async function initialisierePokemonDetails() {
-    const urlParams = new URLSearchParams(window.location.search);
-    pokemonId = urlParams.get('pokemonId');
+    const urlParams = new URLSearchParams(window.location.search); // Get the URL search parameters
+    pokemonId = urlParams.get('pokemonId');   // Get the Pokémon ID from the URL search parameters
     if (pokemonId) {
-        pokemonId = parseInt(pokemonId, 10);
-        const pokemon = await fetchPokemonById(pokemonId);
+        pokemonId = parseInt(pokemonId, 10); // Parse the Pokémon ID as an integer
+        const pokemon = await fetchPokemonById(pokemonId);  // Fetch the Pokémon data by ID
         if (pokemon) {
             displayPokemonDetails(pokemon);
             setupNavigation();
@@ -16,20 +16,21 @@ async function initialisierePokemonDetails() {
 }
 
 async function fetchPokemonById(id) {
-    try {
+    try {  // Try to fetch the Pokémon data from the API
         const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
-        if (!response.ok) {
-            throw new Error(`Error fetching Pokémon with ID ${id}`);
+        if (!response.ok) {  // Check if the response is not OK
+            throw new Error(`Error fetching Pokémon with ID ${id}`); // Throw an error with a message
         }
-        const pokemon = await response.json();
+        const pokemon = await response.json(); // Parse the response JSON
         return pokemon;
     } catch (error) {
         console.error(error);
-        return null;
+        return null;  // Return null if an error occurred
     }
 }
 
 function displayPokemonDetails(pokemon) {
+    console.log(pokemon);
     setBasicPokemonDetails(pokemon);
     setPokemonStats(pokemon);
 }
@@ -40,15 +41,33 @@ function setBasicPokemonDetails(pokemon) {
 }
 
 function setPokemonVisualDetails(pokemon) {
-    updateElementText("name", capitalizeFirstLetter(pokemon.name));
-    updateElementText("pokemon-id", `#${pokemon.id}`);
-    updateElementSrc(".detail-img-wrapper img", pokemon.sprites.other['official-artwork'].front_default);
-    updateElementText("weight", `${pokemon.weight / 10} kg`);
-    updateElementText("height", `${pokemon.height / 10} m`);
-    const moveName = pokemon.moves[0]?.move.name || 'N/A';
-    updateElementText("move", capitalizeFirstLetter(moveName));
-    updateElementText("pokemon-description", pokemon.species.name);
+    updateElementText("name", capitalizeFirstLetter(pokemon.name)); //  Set the text content of the element to the capitalized Pokémon name
+    updateElementText(".pokemon-id-wrap", `#${pokemon.id}`); // Set the text content of the element to the Pokémon ID
+    updateElementSrc(".detail-img-wrapper img", pokemon.sprites.other['official-artwork'].front_default); // Set the src attribute of the image element to the Pokémon sprite URL
+    updateElementText("weight", `${pokemon.weight / 10} kg`); // Set the text content of the element to the Pokémon weight in kg
+    updateElementText("height", `${pokemon.height / 10} m`); // Set the text content of the element to the Pokémon height in m
+    const moveName = pokemon.moves[0]?.move.name || 'N/A'; // Get the name of the first move or default to 'N/A'
+    updateElementText("move", capitalizeFirstLetter(moveName)); // Set the text content of the element to the capitalized move name
+    updateElementText("pokemon-description", pokemon.species.name); // Set the text content of the element to the Pokémon species name
 }
+
+
+
+function setPokemonTypeDetails(pokemon) {
+    const types = pokemon.types.map(typeInfo => typeInfo.type.name);
+    const typeElements = document.querySelectorAll(".type");
+    typeElements.forEach((element, index) => {
+        if (types[index]) {
+            element.textContent = types[index];
+            element.style.backgroundColor = getContrastingColor(getTypeColor(types[index]));
+        } else {
+            element.textContent = '';
+        }
+    });
+    const primaryTypeColor = getTypeColor(types[0]);
+    document.querySelector(".detail-card-detail-wrapper").style.backgroundColor = primaryTypeColor; // Set the background color of the detail card to the primary type color
+}
+
 
 function updateElementText(elementId, text) {
     const element = document.getElementById(elementId);
@@ -65,37 +84,23 @@ function updateElementSrc(elementSelector, src) {
 }
 
 function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase(); // Capitalize the first character of the string and make the rest lowercase
 }
 
-function setPokemonTypeDetails(pokemon) {
-    const types = pokemon.types.map(typeInfo => typeInfo.type.name);
-    const typeElements = document.querySelectorAll(".type");
-    typeElements.forEach((element, index) => {
-        if (types[index]) {
-            element.textContent = types[index];
-            element.style.backgroundColor = getContrastingColor(getTypeColor(types[index]));
-        } else {
-            element.textContent = '';
-        }
-    });
-    const primaryTypeColor = getTypeColor(types[0]);
-    document.querySelector(".detail-card-detail-wrapper").style.backgroundColor = primaryTypeColor;
-}
+
 
 function setPokemonStats(pokemon) {
     const stats = pokemon.stats;
     const statElements = document.getElementsByClassName("stats-wrap");
-    Array.from(statElements).forEach(statElement => {
-        const statName = statElement.getAttribute("data-stat").toLowerCase();
-        const mappedStatName = statNameMapping[statName];
-        const statValue = stats.find(stat => stat.stat.name === statName)?.base_stat || 0;
-
+    Array.from(statElements).forEach(statElement => {  // Convert the HTMLCollection to an array and iterate over each element
+        const statName = statElement.getAttribute("data-stat").toLowerCase(); // Get the stat name from the data-stat attribute of the element
+        const mappedStatName = statNameMapping[statName];  // Get the mapped stat name from the statNameMapping object
+        const statValue = stats.find(stat => stat.stat.name === statName)?.base_stat || 0; // Find the stat value for the current stat name or default to 0
         if (mappedStatName) {
-            statElement.getElementsByClassName("body3-fonts")[0].textContent = `${mappedStatName}: ${statValue}`;
-            const progressBar = statElement.getElementsByTagName("progress")[0];
-            progressBar.value = statValue;
-            progressBar.max = 100;
+            statElement.getElementsByClassName("body3-fonts")[0].textContent = `${mappedStatName}: ${statValue}`; //  Set the text content of the element to the stat name and value
+            const progressBar = statElement.getElementsByTagName("progress")[0];  // Get the progress bar element
+            progressBar.value = statValue;  // Set the progress bar value to the stat value
+            progressBar.max = 100;  // Set the maximum value of the progress bar to 100
             progressBar.style.setProperty('--progress-bar-color', getTypeColor(pokemon.types[0].type.name));
         }
     });
@@ -159,34 +164,33 @@ function getContrastingColor(color) {
 function setupNavigation() {
     const leftArrow = document.getElementById('leftArrow');
     const rightArrow = document.getElementById('rightArrow');
-
     if (leftArrow) {
-        leftArrow.onclick = async () => {
-            if (pokemonId > 1) {
-                await navigatePokemon(pokemonId, -1);
+        leftArrow.onclick = async () => {  // Add an event listener to the left arrow
+            if (pokemonId > 1) {  // Prevent navigating to Pokémon with ID 0
+                await navigatePokemon(pokemonId, -1); // Navigate to the previous Pokémon
             }
         };
     }
-
     if (rightArrow) {
-        rightArrow.onclick = async () => {
-            await navigatePokemon(pokemonId, 1);
+        rightArrow.onclick = async () => { // Add an event listener to the right arrow
+            await navigatePokemon(pokemonId, 1); // Navigate to the next Pokémon
         };
     }
 }
 
-async function navigatePokemon(currentId, direction) {
-    const newId = currentId + direction;
-    if (newId > 0) {
-        const newPokemon = await fetchPokemonById(newId);
+async function navigatePokemon(currentId, direction) { // Navigate to the Pokémon with the specified ID
+    const newId = currentId + direction;  // Calculate the new Pokémon ID
+    if (newId > 0) {    // Prevent navigating to Pokémon with ID 0
+        const newPokemon = await fetchPokemonById(newId);  // Fetch the new Pokémon data
         if (newPokemon) {
             displayPokemonDetails(newPokemon);
-            window.history.pushState(null, null, `?pokemonId=${newId}`);
+            window.history.pushState(null, null, `?pokemonId=${newId}`); // Update the URL with the new Pokémon ID
             pokemonId = newId;
         } else {
-            console.error("Failed to fetch new Pokémon data");
+            console.error("Failed to fetch new Pokémon data"); // Log an error message if the new Pokémon data could not be fetched
         }
     }
 }
 
-document.addEventListener("DOMContentLoaded", initialisierePokemonDetails);
+document.addEventListener("DOMContentLoaded", initialisierePokemonDetails);  // Initialize the Pokémon details page when the DOM content has been loaded
+
