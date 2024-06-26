@@ -42,7 +42,7 @@ function setBasicPokemonDetails(pokemon) {
 
 function setPokemonVisualDetails(pokemon) {
     updateElementText("name", capitalizeFirstLetter(pokemon.name)); //  Set the text content of the element to the capitalized Pokémon name
-    updateElementText(".pokemon-id-wrap", `#${pokemon.id}`); // Set the text content of the element to the Pokémon ID
+    updateElementText("pokeId", `#${pokemon.id}`); // Set the text content of the element to the Pokémon ID
     updateElementSrc(".detail-img-wrapper img", pokemon.sprites.other['official-artwork'].front_default); // Set the src attribute of the image element to the Pokémon sprite URL
     updateElementText("weight", `${pokemon.weight / 10} kg`); // Set the text content of the element to the Pokémon weight in kg
     updateElementText("height", `${pokemon.height / 10} m`); // Set the text content of the element to the Pokémon height in m
