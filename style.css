@@ -4,15 +4,18 @@
 }
 
 
-/* html {
-    scrollbar-width: thin;
-    scrollbar-color: #9b9b9b #f5f5f5;
-} */
 
-::-webkit-scrollbar {
-   background-color: transparent;
-   width: 8px;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+} 
 
+ 
+::-webkit-scrollbar{
+    background-color:transparent;
+    width:8px;
+    
 }
 
 ::-webkit-scrollbar-thumb {
@@ -22,16 +25,76 @@
 
 body {
 
-    margin: 0;
     height: 100vh;
     width: 100vw;
     font-family: 'Roboto', sans-serif;
     background-color: #858b9b;
 	overflow-x: hidden; /* Verhindert horizontalen Scrollbalken */
 }
+section{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height:100vh;
+    background: #042104;
+    animation: animateBg 10s linear infinite;
+}
 
+@keyframes animateBg{
+    0% {
+       filter: hue-rotate(0deg);
+    }
+    100%{
+        filter: hue-rotate(360deg);
+     }
+}
 
-.hideloading {
+section .loader{
+    position: relative;
+    width: 120px;
+    height:120px;
+}
+
+section .loader span{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    transform: rotate(calc(18deg *var(--i)));
+}
+
+section .loader span::before
+ {
+    content:'';
+    position: absolute;
+    top:0;
+    left:0;
+    width: 15px;
+    height:15px;
+    border-radius: 50%;
+    background: #00ff0a;
+    box-shadow: 0 0 10px #00ff0a,
+                0 0 20px #00ff0a,
+                0 0 40px #00ff0a,
+                0 0 80px #00ff0a,
+                0 0 100px #00ff0a;
+    animation: animate 2s linear infinite;     
+    animation-delay: calc(0.1s * var(--i));      
+}
+
+@keyframes animate{
+    0%{
+        transform: scale(1);
+        opacity: 1;
+    }
+    80%,100%{
+        transform: scale(0);
+        opacity: 0;
+    } 
+} 
+
+/* .hideloading {
     position: fixed;
     top: 0;
     left: 0;
@@ -42,13 +105,13 @@ body {
     align-items: center;
     background: #2f2f2fd6;
     transition: opacity 0.75s, visibility 0.65s;
-}
+}  */
 
-.loadball {
+/* .loadball {
     height: 200px;
     width: 200px;
     animation: rotation 2s infinite linear;
-}
+} */
 
 :root {
     --identity-primary: #0a49dc;
@@ -124,6 +187,7 @@ input:focus-visible {
 .pokeball {
     height: 50px;
     width: auto;
+    margin-bottom:- 25px;
 }
 
 .main {
@@ -158,6 +222,7 @@ input:focus-visible {
     display: flex;
     align-items: center;
     justify-content: center;
+    
 }
 
 .logo-wrapper>h1 {
@@ -165,7 +230,7 @@ input:focus-visible {
 }
 
 .logo-wrapper>img {
-    margin-right: -6px;
+    margin-right: 4px;
 }
 
 .search-wrapper,
@@ -319,7 +384,6 @@ input:focus-visible {
     text-align: center;
     text-decoration: none;
     cursor: pointer;
-
 }
 
 .list-item .number-wrap {
@@ -331,16 +395,14 @@ input:focus-visible {
 
 .number-wrap-infos {
     text-align: center;
-
-
 }
 
 .list-item .name-wrap {
     border-radius: 7px;
     background-color: var(--grayscale-background);
-    padding: 24px 8px 4px 8px;
+    padding: 30px 7px 8px 8px;
     color: var(--grayscale-dark);
-    margin-top: -18px;
+    margin-top: 0px;
 }
 
 .list-item .img-wrap {
@@ -446,22 +508,21 @@ div#not-found-message {
 }
 
 @media screen and (max-width: 320px) {
-	
-	.logo-wrapper {
+    .logo-wrapper {
         display: flex;
         flex-direction: column;
         align-items: center;
         text-align: center;
     }
 
-	.pokeball{
-		margin-right: 10px;
-	}
-	.pokemon-logo{
-		height:60px;
-		width:auto;
-	}
-    
+    .pokeball {
+        margin-right: 10px;
+    }
+
+    .pokemon-logo {
+        height: 60px;
+        width: auto;
+    }
 }
 
 @keyframes bounce {

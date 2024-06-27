@@ -1,5 +1,6 @@
 let pokemonId;
 
+
 async function initialisierePokemonDetails() {
     const urlParams = new URLSearchParams(window.location.search); // Get the URL search parameters
     pokemonId = urlParams.get('pokemonId');   // Get the Pokémon ID from the URL search parameters
@@ -15,6 +16,7 @@ async function initialisierePokemonDetails() {
     }
 }
 
+
 async function fetchPokemonById(id) {
     try {  // Try to fetch the Pokémon data from the API
         const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
@@ -29,16 +31,19 @@ async function fetchPokemonById(id) {
     }
 }
 
+
 function displayPokemonDetails(pokemon) {
     console.log(pokemon);
     setBasicPokemonDetails(pokemon);
     setPokemonStats(pokemon);
 }
 
+
 function setBasicPokemonDetails(pokemon) {
     setPokemonVisualDetails(pokemon);
     setPokemonTypeDetails(pokemon);
 }
+
 
 function setPokemonVisualDetails(pokemon) {
     updateElementText("name", capitalizeFirstLetter(pokemon.name)); //  Set the text content of the element to the capitalized Pokémon name
@@ -50,7 +55,6 @@ function setPokemonVisualDetails(pokemon) {
     updateElementText("move", capitalizeFirstLetter(moveName)); // Set the text content of the element to the capitalized move name
     updateElementText("pokemon-description", pokemon.species.name); // Set the text content of the element to the Pokémon species name
 }
-
 
 
 function setPokemonTypeDetails(pokemon) {
@@ -76,6 +80,7 @@ function updateElementText(elementId, text) {
     }
 }
 
+
 function updateElementSrc(elementSelector, src) {
     const element = document.querySelector(elementSelector);
     if (element) {
@@ -83,10 +88,10 @@ function updateElementSrc(elementSelector, src) {
     }
 }
 
+
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase(); // Capitalize the first character of the string and make the rest lowercase
 }
-
 
 
 function setPokemonStats(pokemon) {
@@ -106,6 +111,7 @@ function setPokemonStats(pokemon) {
     });
 }
 
+
 const statNameMapping = {
     hp: "HP",
     attack: "ATTACK",
@@ -114,6 +120,7 @@ const statNameMapping = {
     "special-defense": "SPECIAL DEFENSE",
     speed: "SPEED"
 };
+
 
 function getTypeColor(type) {
     const typeColors = {
@@ -137,6 +144,7 @@ function getTypeColor(type) {
     };
     return typeColors[type] || "#777";
 }
+
 
 function getContrastingColor(color) {
     const contrastColors = {
@@ -193,4 +201,5 @@ async function navigatePokemon(currentId, direction) { // Navigate to the Pokém
 }
 
 document.addEventListener("DOMContentLoaded", initialisierePokemonDetails);  // Initialize the Pokémon details page when the DOM content has been loaded
+
 

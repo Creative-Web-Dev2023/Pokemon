@@ -8,14 +8,14 @@ const loadingDiv = document.getElementById('loadscreen-div'); // Loading Screen 
 
 let allPokemonsWithId = [];
 
-document.addEventListener("DOMContentLoaded", async () => {
+window.onload = async () => { // Wait for the window to be fully loaded
     loadingDiv.classList.toggle('d-none'); // Immediately show the loading screen
-    await fetchPokemons();
-    renderPokemons(allPokemonsWithId);
+    await fetchPokemons(); // Fetch the Pokémon data
+    renderPokemons(allPokemonsWithId); // Render the Pokémon list
     setTimeout(() => {
-        loadingDiv.classList.toggle('d-none');
+        loadingDiv.classList.toggle('d-none'); // Hide the loading screen after 3 seconds
     }, 3000); 
-})
+}
 
 async function fetchPokemons() {
     const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=151');
@@ -30,23 +30,32 @@ async function fetchPokemons() {
 function renderPokemons(pokemons) {
     listWrapper.innerHTML = '';
     pokemons.forEach((pokemon, index) => {
-        const pokemonId = pokemon.url.split('/')[6]; // Get the pokemon id from the url
+        const pokemonId = pokemon.url.split('/')[6]; // Hole die Pokemon-ID aus der URL
         const listItem = document.createElement("div");
         listItem.className = "list-item";
-        listItem.innerHTML = `
-            <div class="number-wrap">
-                <p class="caption-fonts">#${pokemonId}</p>
-            </div>
-            <div class="img-wrap">
-                <img src="https://raw.githubusercontent.com/pokeapi/sprites/master/sprites/pokemon/other/dream-world/${pokemonId}.svg" alt="${pokemon.name}" />
-            </div>
-            <div class="name-wrap">
-                <p class="body3-fonts">${pokemon.name}</p>
-            </div>
-        `;
-        listItem.addEventListener('click', () => window.location.href = `details.html?pokemonId=${pokemonId}`); // Redirect to details page
-        listWrapper.appendChild(listItem); // Add the Pokemon to the list   
+        listItem.innerHTML = getPokemonHtml(pokemonId, capitalizeFirstLetter(pokemon.name));
+        listItem.addEventListener('click', () => window.location.href = `details.html?pokemonId=${pokemonId}`); // Weiterleitung zur Detailseite
+        listWrapper.appendChild(listItem); // Füge das Pokemon zur Liste hinzu
     });
+}
+
+function getPokemonHtml(pokemonId, pokemonName) {
+    return `
+        <div class="number-wrap">
+            <p class="caption-fonts">#${pokemonId}</p>
+        </div>
+        <div class="img-wrap">
+            <img src="https://raw.githubusercontent.com/pokeapi/sprites/master/sprites/pokemon/other/dream-world/${pokemonId}.svg" alt="${pokemonName}" />
+        </div>
+        <div class="name-wrap">
+            <p class="body3-fonts">${pokemonName}</p>
+        </div>
+    `;
+}
+
+
+function capitalizeFirstLetter(string) { // This function capitalizes the first letter of a given string
+    return string.charAt(0).toUpperCase() + string.slice(1); // Capitalize the first letter of the string
 }
 
 searchInput.addEventListener('input', filterPokemons); // Add the event listener to the input element
