@@ -7,13 +7,12 @@
     <link rel="stylesheet" href="./style.css" />
 	  <link rel="shortcut icon" href="./img/game.png" type="icon">
   </head>
-  <body >
-  <div id="loadscreen-div"  class="hideloading d-none">
+  <div id="loadscreen-div" class="hideloading">
      <!-- <img class="loadball" src="./img/pokeball.png">  -->
   </div> 
-  
-  <section class="fullscreen-background">
-      <div class="loader" >
+  <body >
+     <section>
+      <div class="loader" id="loading-spinner d-none">
         <span style="--i:1"></span>
         <span style="--i:2"></span>
         <span style="--i:3"></span>
@@ -35,7 +34,6 @@
         <span style="--i:19"></span>
         <span style="--i:20"></span>
       </div>
-    </section> 
     <main class="main">
       <header class="header home">
         <div class="container">
@@ -70,7 +68,6 @@
           </div>
         </div>
       </header>
-   
       <section class="pokemon-list">
         <div class="container">
           <div class="list-wrapper" id="list-wrapper"></div>
@@ -78,8 +75,19 @@
         <div id="not-found-message">Pokemon not found</div>
       </section>
     </main>
+  </section>
     <div id="dialog" class="dialog d-none"></div>
+    <div class="load-button">
+      <button onclick="loadMorePokemon()" id="loadmore-pokemon" type="button" class="glow-on-hover">
+        Load More
+      </button>
+    </div>
 	  <script src="./script.js" defer></script>
     <script src="./search.js"></script>
   </body>
+  <footer>
+    <p class="image-credit">
+        Credits @ <a href="https://www.deviantart.com/elintan/" target="_blank">DeviantArt</a> 
+    </p>
+ </footer>
 </html>
