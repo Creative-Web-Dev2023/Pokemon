@@ -66,7 +66,7 @@ function capitalizeFirstLetter(string) {// This function capitalizes the first l
 searchInput.addEventListener("input", filterPokemons); // Add the event listener to the input element
 
 function filterPokemons() {
-  const searchValue = searchInput.value.toLowerCase(); //
+  const searchValue = searchInput.value.toLowerCase(); 
   let filteredPokemons;
   if (numberFilter.checked) {
     filteredPokemons = allPokemonsWithId.filter(// If number filter is checked, perform exact ID match

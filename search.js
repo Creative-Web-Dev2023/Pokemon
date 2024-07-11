@@ -3,7 +3,7 @@ const inputElement = document.getElementById("search-input");
 const searchIcon = document.getElementById("search-close-icon");
 const sortWrapper = document.getElementById("sort-wrapper");
 
-// Add event
+
 function handleInputChange() { // This function is called when the input value changes
   const inputValue = this.value;  
   if (inputValue !== "") {    // If the input is not empty, show the close icon
@@ -23,4 +23,5 @@ function handleSortIconOnClick() { // This function is called when the sort wrap
   document.querySelector(".filter-wrapper").classList.toggle("filter-wrapper-open"); // Toggle the visibility of the filter wrapper and the overlay
   document.querySelector("body").classList.toggle("filter-wrapper-overlay");
 }
+
 
