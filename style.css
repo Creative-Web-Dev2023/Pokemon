@@ -32,14 +32,12 @@ body {
 }
 
 section {
-  min-height: 100vh;
   background: #042104;
   animation: animateBg 10s linear infinite;
   /* display: flex;
   justify-content: center;
-  align-items: center;
-  width: 100%;
-  flex-direction: column; */
+  align-items: center; */
+  
 }
 .loader{
   display: flex;
@@ -646,5 +644,4 @@ footer {
   
   .image-credit a:hover {
     text-decoration: underline; /* Unterstreicht den Link beim Hover */
-  }
-  
+  }  

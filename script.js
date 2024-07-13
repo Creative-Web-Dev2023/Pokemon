@@ -5,23 +5,28 @@ const numberFilter = document.getElementById("number");
 const nameFilter = document.getElementById("name");
 const notFoundMessage = document.getElementById("not-found-message");
 const loadingDiv = document.getElementById("loadscreen-div"); // Loading Screen is always here
-const loadingSpinner = document.getElementById("loading-spinner");
 let limit = 70;
 let offset = 0;
 let allPokemonsWithId = [];
 
+
 window.onload = async () => { // Wait for the window to be fully loaded
+ init(); // Initialize the page
+};
+
+function init() {
  if (loadingDiv) {
     loadingDiv.classList.toggle("d-none"); // Immediately show the loading screen
  }
- await fetchPokemons(); // Fetch the Pokémon data
- renderPokemons(allPokemonsWithId); // Render the Pokémon list
- setTimeout(() => {
-    if (loadingDiv) {
-        loadingDiv.classList.toggle("d-none"); // Hide the loading screen after 3 seconds
-    }
- }, 3000);
-};
+ fetchPokemons().then(() => { // Fetch the Pokémon data
+    renderPokemons(allPokemonsWithId); // Render the Pokémon list
+    setTimeout(() => {
+        if (loadingDiv) {
+            loadingDiv.classList.toggle("d-none"); // Hide the loading screen after 3 seconds
+        }
+    }, 3000);
+ });
+}
 
 async function fetchPokemons() {
   const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`);
@@ -84,11 +89,10 @@ function filterPokemons() {
 }
 
 function loadMorePokemon() {
-    showLoadingSpinner();
     offset += limit;
     fetchPokemons().then(() => {
       renderPokemons(allPokemonsWithId);
-      hideLoadingSpinner();
+      
     });
   }
   
@@ -107,14 +111,12 @@ async function fetchPokemonById(id) {
   return pokemon;
 }
 
-function showLoadingSpinner() {
-  if (loadingSpinner) {
-    loadingSpinner.classList.remove("d-none");
+function showOrHideLoadingSpinner(action) {
+  const loadingSpinner = document.getElementById("loading-spinner");
+  if (action === 'show') {
+    loadingSpinner.classList.remove('d-none');
+  } else if (action === 'hide') {
+    loadingSpinner.classList.add('d-none');
   }
 }
 
-function hideLoadingSpinner() {
-  if (loadingSpinner) {
-    loadingSpinner.classList.add("d-none");
-  }
-}
