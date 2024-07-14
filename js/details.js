@@ -1,6 +1,4 @@
 let pokemonId;
-
-
 async function initialisierePokemonDetails() {
     const urlParams = new URLSearchParams(window.location.search); // Get the URL search parameters
     pokemonId = urlParams.get('pokemonId');   // Get the Pokémon ID from the URL search parameters
@@ -169,6 +167,7 @@ function getContrastingColor(color) {
     return contrastColors[color] || "#333";
 }
 
+
 function setupNavigation() {
     const leftArrow = document.getElementById('leftArrow');
     const rightArrow = document.getElementById('rightArrow');
@@ -185,6 +184,7 @@ function setupNavigation() {
         };
     }
 }
+
 
 async function navigatePokemon(currentId, direction) { // Navigate to the Pokémon with the specified ID
     const newId = currentId + direction;  // Calculate the new Pokémon ID

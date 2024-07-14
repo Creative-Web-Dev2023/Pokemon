@@ -547,19 +547,21 @@
 
 footer {
   position: fixed;
-  bottom: 10px;
+  bottom: 0;
   width: 100%;
   text-align: center;
-  background-color: rgba(0, 0, 0, 0.5); /* Halbtransparenter Hintergrund für bessere Lesbarkeit */
+  background-color: rgba(0, 0, 0, 0.5); 
   color: white;
   padding: 5px 0;
+  z-index: 1000;
 }
 
 .image-credit a {
-  color: #00ff0a; /* Link-Farbe */
+  color: #00ff0a; 
   text-decoration: none;
 }
 
 .image-credit a:hover {
-  text-decoration: underline; /* Unterstreicht den Link beim Hover */
+  text-decoration: underline; 
 }
+

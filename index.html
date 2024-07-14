@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pokemon</title>
-    <link rel="stylesheet" href="./style.css" />
-	  <link rel="shortcut icon" href="./img/game.png" type="icon">
-  </head>
-  <body onload="init()">
-    <div id="loadscreen-div" class="hideloading">
-     <section>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pokemon</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="shortcut icon" href="./img/game.png" type="icon">
+</head>
+<body id="top" onload="init()">            
+  <div id="loadscreen-div" class="hideloading">
+    <section>
       <div class="loader" id="loading-spinner">
         <span style="--i:1"></span>
         <span style="--i:2"></span>
@@ -32,61 +32,70 @@
         <span style="--i:19"></span>
         <span style="--i:20"></span>
       </div>
-    </div>
-    <main class="main">
-      <header class="header home">
-        <div class="container">
-          <div class="logo-wrapper">
-            <img src="./img/game.png" class="pokeball"/>
-           <img src="./img/pokemonlogo.png" alt="" class="pokemon-logo">
+    </section>
+  </div>
+  <main class="main">
+    <header class="header home">
+      <div class="container">
+        <div class="logo-wrapper">
+          <img src="./img/game.png" class="pokeball"/>
+          <img src="./img/pokemonlogo.png" alt="" class="pokemon-logo">
+        </div>
+        <div class="search-wrapper">
+          <div class="search-wrap">
+            <img src="./img/search.svg" alt="search icon" class="search-icon" />
+            <input oninput="handleInputChange()" class="search-input body3-fonts" placeholder="Search" id="search-input"/>
+            <img onclick="handleSearchCloseOnClick()" src="./img/cross.svg" alt="cross icon" class="search-close-icon" id="search-close-icon"/>
           </div>
-          <div class="search-wrapper">
-            <div class="search-wrap">
-              <img src="./img/search.svg"  alt="search icon" class="search-icon" />
-              <input oninput="handleInputChange()" class="search-input body3-fonts" placeholder="Search" id="search-input"/>
-              <img onclick = "handleSearchCloseOnClick()" src="./img/cross.svg" alt="cross icon" class="search-close-icon" id="search-close-icon"/>
+          <div onclick="handleSortIconOnClick()" class="sort-wrapper" id="sort-wrapper">
+            <div class="sort-wrap">
+              <img src="./img/letter.svg" alt="sorting" class="sort-icon" id="sort-icon"/>
             </div>
-            <div onclick = "handleSortIconOnClick()" class="sort-wrapper" id="sort-wrapper">
-              <div class="sort-wrap">
-                <img src="./img/letter.svg" alt="sorting" class="sort-icon" id="sort-icon"/>
-              </div>
-              <div class="filter-wrapper">
-                <p class="body2-fonts">Sort by:</p>
-                <div class="filter-wrap">
-                  <div>
-                    <input type="radio" id="number" name="filters" value="number" checked/>
-                    <label for="number" class="body3-fonts">Number</label>
-                  </div>
-                  <div>
-                    <input type="radio" id="name" name="filters" value="name" />
-                    <label for="name" class="body3-fonts">Name</label>
-                  </div>
+            <div class="filter-wrapper">
+              <p class="body2-fonts">Sort by:</p>
+              <div class="filter-wrap">
+                <div>
+                  <input type="radio" id="number" name="filters" value="number" checked/>
+                  <label for="number" class="body3-fonts">Number</label>
+                </div>
+                <div>
+                  <input type="radio" id="name" name="filters" value="name" />
+                  <label for="name" class="body3-fonts">Name</label>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </header>
-      <section class="pokemon-list">
-        <div class="container">
-          <div class="list-wrapper" id="list-wrapper"></div>
-        </div>
-        <div id="not-found-message">Pokemon not found</div>
-      </section>
-   </main>
-  </section>
-    <div id="dialog" class="dialog d-none"></div>
-    <div class="load-button">
-      <button onclick="loadMorePokemon()" id="loadmore-pokemon" type="button" class="glow-on-hover">
-        Load More
-      </button>
-    </div>
-	  <script src="./script.js" defer></script>
-    <script src="./search.js"></script>
-  </body>
+      </div>
+    </header>
+    <section class="pokemon-list">
+      <div class="container">
+        <div class="list-wrapper" id="list-wrapper"></div>
+      </div>
+      <div id="not-found-message">Pokemon not found</div>
+    </section>
+    <div id="bottom"></div>
+  </main>
   <footer>
-    <p class="image-credit">
-        Credits @ <a href="https://www.deviantart.com/elintan/" target="_blank">DeviantArt</a> 
-    </p>
- </footer>
+    <div class="bottom-button-img-wrapper">
+      <button id="back_to_top_button" class="glow-on-hover2">
+        <a href="#top"><img src="./img/arrow_up.svg" alt="Arrow Up"></a>
+      </button>
+      <div class="load-button">
+        <button onclick="loadMorePokemon()" id="load-more-button" class="glow-on-hover1">
+          Load More
+        </button>
+      </div>
+      <button id="scroll_down_button" class="glow-on-hover2">
+        <a href="#bottom"><img src="./img/arrow_down.png" alt="Arrow Down"></a>
+      </button>   
+    </div>
+    <div class="owner-info">
+      <p>coded by Gabriela Ströbl, July 2024</p>
+    </div>
+  </footer>
+  
+  <script src="js/script.js" defer></script>
+  <script src="js/search.js" defer></script>
+</body>
 </html>
