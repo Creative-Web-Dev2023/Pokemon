@@ -1,7 +1,9 @@
 @font-face {
-  font-family: "Roboto";
-  src: url("./fonts/Roboto-BlackItalic.ttf") format("truetype");
+  font-family: "Roboto-Black";
+  src: url('./fonts/Roboto-BlackItalic.ttf') format("truetype");
 }
+
+
 /* Root variables for consistent styling across the site */
 :root {
   --identity-primary: #0a49dc;

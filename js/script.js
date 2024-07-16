@@ -77,24 +77,14 @@ searchInput.addEventListener("input", filterPokemons);
 
 function filterPokemons() {
   const searchValue = searchInput.value.toLowerCase();
-  let filteredPokemons;
-  if (numberFilter.checked) {
-    filteredPokemons = allPokemonsWithId.filter(
-      (pokemon) => pokemon.id.toString() === searchValue
-    );
-  } else {
-    filteredPokemons = allPokemonsWithId.filter((pokemon) => pokemon.name.startsWith(searchValue));
-  }
+  const filteredPokemons = numberFilter.checked ? 
+    allPokemonsWithId.filter(pokemon => pokemon.id.toString() === searchValue) : 
+    allPokemonsWithId.filter(pokemon => pokemon.name.startsWith(searchValue));
   currentPokemons = filteredPokemons;
   listWrapper.innerHTML = "";
   renderPokemons(filteredPokemons);
-  if (filteredPokemons.length === 0) {
-    notFoundMessage.style.display = "block";
-  } else {
-    notFoundMessage.style.display = "none";
-  }
+  notFoundMessage.style.display = filteredPokemons.length === 0 ? "block" : "none";
 }
-
 if (loadMoreButton) {
   loadMoreButton.addEventListener("click", loadMorePokemon);
 }
