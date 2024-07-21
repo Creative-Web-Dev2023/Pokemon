@@ -31,7 +31,7 @@ async function fetchPokemonById(id) {
 
 
 function displayPokemonDetails(pokemon) {
-    console.log(pokemon);
+
     setBasicPokemonDetails(pokemon);
     setPokemonStats(pokemon);
 }
@@ -183,6 +183,19 @@ function setupNavigation() {
             await navigatePokemon(pokemonId, 1); // Navigate to the next Pokémon
         };
     }
+    updateArrowsVisibility(); // Call the function to update the visibility of arrows
+}
+
+
+function updateArrowsVisibility() {
+    const leftArrow = document.getElementById('leftArrow');
+    if (leftArrow) {
+        if (pokemonId > 1) {
+            leftArrow.style.display = 'block'; // Show the left arrow if not the first Pokémon
+        } else {
+            leftArrow.style.display = 'none'; // Hide the left arrow if the first Pokémon
+        }
+    }
 }
 
 
@@ -194,10 +207,12 @@ async function navigatePokemon(currentId, direction) { // Navigate to the Pokém
             displayPokemonDetails(newPokemon);
             window.history.pushState(null, null, `?pokemonId=${newId}`); // Update the URL with the new Pokémon ID
             pokemonId = newId;
+            updateArrowsVisibility();  // Update the visibility of the arrows
         } else {
             console.error("Failed to fetch new Pokémon data"); // Log an error message if the new Pokémon data could not be fetched
         }
     }
+    updateArrowsVisibility();  // Update the visibility of the arrows
 }
 
 document.addEventListener("DOMContentLoaded", initialisierePokemonDetails);  // Initialize the Pokémon details page when the DOM content has been loaded
