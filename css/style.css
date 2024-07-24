@@ -675,14 +675,7 @@ border-radius: 10px;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   
 }
-  .image-credit a {
-    color: #00ff0a; /* Link-Farbe */
-    text-decoration: none;
-  }
-  
-  .image-credit a:hover {
-    text-decoration: underline; /* Unterstreicht den Link beim Hover */
-  }  
+
 
   @media screen and (max-width:500px){
     .main {
@@ -714,15 +707,14 @@ border-radius: 10px;
       width: auto;
     }
 
-    footer {
-      padding: 0.5em; 
-      width:auto;
-      height:auto;
-    }
-  
+ 
     .glow-on-hover1,
     .glow-on-hover2 {
       width: 80px; 
     }
-  
+   section .loader span{
+    left:-50px;
+   }
   }
+  
+  

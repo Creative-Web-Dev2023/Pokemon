@@ -31,7 +31,6 @@ async function fetchPokemonById(id) {
 
 
 function displayPokemonDetails(pokemon) {
-
     setBasicPokemonDetails(pokemon);
     setPokemonStats(pokemon);
 }
